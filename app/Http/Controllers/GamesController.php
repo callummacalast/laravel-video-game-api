@@ -51,10 +51,7 @@ class GamesController extends Controller
      */
     public function show($slug)
     {
-        $game = Http::withHeaders([
-            'Client-ID' => '9i0uypd0v169xox53erkm5bdbrepmm',
-            'Authorization' => 'Bearer sv976lbh5nymcf3zhl95wqqz7gvn0a'
-        ])
+        $game = Http::withHeaders(config('services.igdb_key'))
             ->withBody(
                "fields *, cover.url, first_release_date, platforms.abbreviation, rating, slug, involved_companies.company.name, genres.name, aggregated_rating, summary, websites.*, 
                videos.*, screenshots.*, similar_games.cover.url, similar_games.name, similar_games.rating, similar_games.platforms.abbreviation, similar_games.slug;
@@ -65,7 +62,7 @@ class GamesController extends Controller
 
 
         abort_if(!$game, 404);
-        dump($game);
+        // dump($game);
 
 
         return view('show', [
